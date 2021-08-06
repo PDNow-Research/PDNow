@@ -7,7 +7,8 @@ Next Steps: Try the paper's normalization method. Try to see why we have: 10/14 
 
 
 Day 2 Process
-1. We tried the paper's mentioned normalization method (subtracted avgdev and divided by stddev) and received 76% accuracy. We predicted 51/60 PD right but only 5/14 control patients right. This is rather expected, however, considering that we have way more PD data than control data patients available. To solve this problem, we took Meander data for control patients (it has the same features (although perhaps on wildly different scales that will not end up being useful??)) to build up more data.
+1. We tried no normalization method whatsoever and received 76% accuracy. We predicted 51/60 PD right but only 5/14 control patients right. This is rather expected, however, considering that we have way more PD data than control data patients available. To solve this problem, we took Meander data for control patients (it has the same features (although perhaps on wildly different scales that will not end up being useful??)) to build up more data.
+2. We tried the paper's mentioned normalization method (subtracted avgdev and divided by stddev) and received accuracy. 
 2. We tried Meander data for control patients. We received approximately 0.3 percent more accuracy for 76.1 %. We only got 29 vs 14 control samples. Also, we normalized both groups together (spiral and meander). Now, we will try separate normalization for the Meander and Spiral data.
 
 How exactly do we diagnose if our accuracy is good but there is some other problem going on? Any form of visualization that could be useful??
