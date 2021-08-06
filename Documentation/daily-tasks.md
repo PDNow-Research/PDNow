@@ -6,6 +6,7 @@ DAY 1 Process
 Next Steps: Try the paper's normalization method. Try to see why we have: 10/14 control rows predicted right. 36/60 PD rows predicted right. Also, important to consider than while we have 368 images for spirals, each patient drew 4, so technically we are predicting per 1 image, not per patient. (And we might be unable to predict per patient anyway, since we think we may lack their indexes/don't know which images belong to a specific patient.)
 
 
+
 Day 2 Process
 1. We tried no normalization method whatsoever and received 76% accuracy. We predicted 51/60 PD right but only 5/14 control patients right. This is rather expected, however, considering that we have way more PD data than control data patients available. To solve this problem, we took Meander data for control patients (it has the same features (although perhaps on wildly different scales that will not end up being useful??)) to build up more data.
 2. We tried Meander data for control patients. We received approximately 0.3 percent more accuracy for 76.1 %. We only got 29 vs 14 control samples.
@@ -14,3 +15,8 @@ Day 2 Process
 
 
 How exactly do we diagnose if our accuracy is good but there is some other problem going on? Any form of visualization that could be useful??
+
+
+Day 3 Process
+1. We looked at a lot of other papers to see what they have done and identify what we can do differently/test. We also decided to exactly replicate the work provided by https://repositorio.unesp.br/bitstream/handle/11449/165337/WOS000385330400009.pdf?sequence=1 paper (old HandPD paper - 67% accuracy with SVM). For exact replication, we employed data from the new Hand PD dataset, because the old one did not share the patient information and id (that we needed for replication), although it said it did. The new Hand PD dataset contains lots of data outside just the features that the old Hand PD paper worked with, but we are just using those features for now.
+2. The first step of replication was to split into .... 
