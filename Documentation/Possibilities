@@ -1,3 +1,4 @@
 1. GAN for data generation
 2. NN with text features
 3. New image features
+4. Remove all 255s from images, thus removing all white space, leaving only feature traces
