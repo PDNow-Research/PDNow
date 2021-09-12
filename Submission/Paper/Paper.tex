@@ -102,6 +102,25 @@ by assessing whether the EEG signals depicted brain abnormalities, achieving 88.
 \paragraph{Dataset}
 \label{sec:Dataset} Our dataset was formed by combining the New HandPD and Old HandPD dataset available at (https://wwwp.fc.unesp.br/~papa/pub/datasets/Handpd/). It consists of 158 individuals, 53 healthy and 105 PD patients. Each patient drew 8 images, 4 spirals and 4 meander. With these images, we constructed 2 datasets, one consisting of extracted numerical features and the other consisting of images.
 
+% table 1
+\begin{table*}[hbtp]
+\centering 
+\floatconts
+{tab:table1}
+{\caption{Demographics of Data}} 
+    {
+        \begin{tabular}{lcccccc}
+        \toprule
+        \bfseries & \bfseries Mean Age (SD) & \bfseries Left Handed & \bfseries Right Handed & \bfseries \% Female & \bfseries Counts \\
+        \midrule
+        Healthy & 44.11 (15.46) & 7 & 46 & 54.7\% & 53 \\
+        Healthy & 58.75 (7.51) & 5 & 69 & 20.3\% & 74 \\
+        \bottomrule
+        \end{tabular}
+    }
+\end{table*}
+
+
 \paragraph{Preprocessing}
 \label{sec:Preprocessing} 
 We mimicked the feature extraction process used (cite handpd ppl) to extract 9 numerical features from the images. First, the handwritten trace (HT) and exam trace (ET) were extracted from the image. Figure (X) shows an example image and the extracted HT and ET.  Using the HT and ET, the below features were computed:
@@ -128,5 +147,12 @@ Figures 6-8 are computed ultizing the equation for relative tremor: $r_\SUP{ET}^
 \item F8: Standard Deviation of ET values
 \item F9: The number of times the difference between HT and ET radii changes from positive to negative.
 \end{enumerate}
+
+The features were then normalized as follows:
+\[f[i]' = \sum_\SUP{i=1}^9\frac{f[i] - avg(i)}{std(i)}\]
+f[i]' represents the normalized equivalent of feature f[i] for features 1-9.
+
+Additionally, we noticed there was a large class-imbalance present in our dataset, with 53 healthy and 105 PD patients. After performing experiments with our machine learning models, we discovered that this imbalance led to overfitting and undesirable accuracies, even after the assignation of higher weight to the healthy class. To cope with this, we truncated our original dataset by removing the 31 PD patients from the New HandPD dataset. This resulted in 127 patients, 53 healthy and 74 PD, which greatly boosted our results. Table \ref{tab:table1} shows our demographics for cohort of patients. 
+
 
 \end{document}
