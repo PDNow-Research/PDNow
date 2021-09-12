@@ -120,7 +120,6 @@ by assessing whether the EEG signals depicted brain abnormalities, achieving 88.
     }
 \end{table*}
 
-
 \paragraph{Preprocessing}
 \label{sec:Preprocessing} 
 We mimicked the feature extraction process used (cite handpd ppl) to extract 9 numerical features from the images. First, the handwritten trace (HT) and exam trace (ET) were extracted from the image. Figure (X) shows an example image and the extracted HT and ET.  Using the HT and ET, the below features were computed:
@@ -152,7 +151,18 @@ The features were then normalized as follows:
 \[f[i]' = \sum_\SUP{i=1}^9\frac{f[i] - avg(i)}{std(i)}\]
 f[i]' represents the normalized equivalent of feature f[i] for features 1-9.
 
-Additionally, we noticed there was a large class-imbalance present in our dataset, with 53 healthy and 105 PD patients. After performing experiments with our machine learning models, we discovered that this imbalance led to overfitting and undesirable accuracies, even after the assignation of higher weight to the healthy class. To cope with this, we truncated our original dataset by removing the 31 PD patients from the New HandPD dataset. This resulted in 127 patients, 53 healthy and 74 PD, which greatly boosted our results. Table \ref{tab:table1} shows our demographics for cohort of patients. 
+Additionally, we noticed there was a large class-imbalance present in our dataset, with 53 healthy and 105 PD patients. After performing experiments with our machine learning models, we discovered that this imbalance led to overfitting and undesirable accuracies, even after the assignation of higher weight to the healthy class. To cope with this, we truncated our original dataset by removing the 31 PD patients from the New HandPD dataset. This resulted in 127 patients, 53 healthy and 74 PD, which greatly boosted our results. The final dataset of 158 patients was randomly split between train (76.5\%), validation (8.5\%) and hold-out test (15\%) sets. Table \ref{tab:table1} shows our demographics for cohort of patients. 
+\section{Methodology}
+\label{Methodology}
+
+\label{sec:SVM}  
+\paragraph{(1) Support Vector Machines on Numerical Features Dataset} In model 1, we utilized a Support Vector Machine (SVM) where the PD diagnosis label was analyzed on the nine extracted numerical features. We used 10-fold Cross-Validation (CV) on the held-out validation set to maximize Accuracy by choosing an optimal kernel (Radial Base, Linear, or Polynomial), class weightage (None or Balanced), probability threshold and lambda. After training and validating the model on the image level, we tested it on the patient-level, extracting all 8 images from 11 PD and 8 healthy patients (15\% test set) and selecting an optimal aggregation scheme for patient-level predictions.  
+
+\label{sec:LogReg}  
+\paragraph{(2) Regularized Logistic Regression on Numerical Features Dataset} In model 2, we employed Regularized Logistic Regression strategies, regressing the PD diagnosis label against the nine extracted numerical features. With 10-fold CV, we iterated over different lambda values, probability thresholds, and loss and solver functions to maximize accuracy for our image-level predictions. We tested the model on the patient-level After training and validating the model on the image level, we tested it on the patient-level, extracting all 8 images from 5 PD and 4 healthy patients (15\% test set) and selecting an optimal aggregation scheme for patient-level predictions.  
+
+\section{Results}
+\label{Results}
 
 
 \end{document}
