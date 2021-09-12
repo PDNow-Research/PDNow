@@ -48,8 +48,7 @@
 \jmlrworkshop{Machine Learning for Health (ML4H) 2021} % W&CP title
 
  % The optional argument of \title is used in the header
-\title[Short Title]{Full Title of Article\titlebreak This Title Has
-A Line Break}
+\title[Machine Learning for Diagnosis of Parkinson's Disease]{Machine Learning Real-Time and Automatic Diagnosis of Parkinson’s Disease by Extracting Signs of Micrographia from Handwriting Images}
 
 % Authors with different addresses and equal first authors:
 \author{Riya Tyagi \nametag{\thanks{Authors contributed equally}\SUP{1}},
@@ -76,10 +75,11 @@ Lijun Zhang \SUP{4}
 \maketitle
 
 \begin{abstract}
-Parkinson’s disease (PD) is debilitating, progressive, and clinically marked by motor symptoms, which affects over 10 million lives around the world. As the second most common neurodegenerative disease with no approved treatments, the existing diagnosis methods have limitations, such as the expense of visiting doctors and the challenge of automated early detection, considering that symptoms and behavioral differences in patients and healthy individuals are often not present in early stages. Micrographia is a disorder commonly observed in early stages of PD. In order to establish mechanisms for early detection of PD, we applied machine and deep learning techniques to extract signs of micrographia from drawing samples gathered from a variety of open-source datasets. We have discovered that a Convolutional Neural Network (CNN) performs best and can reliably learn important information solely from raw images. This work sets the foundations for a web portal allowing any individual worldwide with access to a pen, printer, and phone to upload an image of a handwriting assessment we designed and receive a PD diagnosis in real-time.
+Parkinson’s disease (PD) is debilitating, progressive, and clinically marked by motor symptoms, which affects over 10 million lives around the world. As the second most common neurodegenerative disease with no approved treatments, the existing diagnosis methods have limitations, such as the expense of visiting doctors and the challenge of automated early detection, considering that symptoms and behavioral differences in patients and healthy individuals are often not present in early stages. Micrographia is a disorder commonly observed in early stages of PD. In order to establish mechanisms for early detection of PD, we applied machine and deep learning techniques to extract signs of micrographia from drawing samples gathered from a variety of open-source datasets.  This work sets the foundations for a web portal allowing any individual worldwide with access to a pen, printer, and phone to upload an image of a handwriting assessment we designed and receive a PD diagnosis in real-time.
 \end{abstract}
+
 \begin{keywords}
-CNN, Parkinson’s, PD, micrographia, disorder, early detection, diagnosis, neurodegenerative
+Parkinson’s, Micrographia, Early Detection, Diagnosis, Neurodegenerative
 \end{keywords}
 
 \section{Introduction}
@@ -89,18 +89,18 @@ Parkinson’s disease (PD) is a degenerative, chronic, and progressive nervous s
 
 Parkinson’s disease cannot be treated, although specific drugs and medications can assist with symptoms in early stages, potentially preventing the disease’s progression to more severe stages. Early detection and prognosis of PD are crucial for assisting patients to retain a good quality of life. However, diagnosing Parkinson’s disease in its early stages is a very challenging task, and there are currently no specific tests designed to diagnose PD. Diagnosis is based on a thorough examination performed by a trained medical official, including a neurological examination, medical history evaluation, blood and laboratory tests, and brain scans. Even with these procedures, PD is misdiagnosed up to 30\% of the time, especially in early stages, due to the many Parkinson’s mimics, the main ones being Essential Tremors and Drug Induced Parkinson’s. Additionally, up to 20\% of PD patients are undiagnosed. Receiving a PD diagnosis is expensive, time consuming, and non-accessible, as reported by 21\% of patients who had to visit their general provider thrice before receiving a specialist referral for their condition. 
 
-Tools that can make the diagnosis process accurate, accessible, automatic, real-time, early, and free of cost can have tremendous impact for Parkinson’s patients. In this study, we apply machine and deep learning strategies on a variety of data, including both image and numerical features. We present a Convolutional Neural Network model able to uncover signs of Parkinson’s in drawing images and compare it to machine learning models.
+Tools that can make the diagnosis process accurate, accessible, automatic, real-time, early, and free of cost can have tremendous impact for Parkinson’s patients. In this study, we apply machine learning strategies to obtain and accurate and early detection of Parkinson's disease. 
 
 \section{Related Works}
 \label{related-works}
-Prior works have incorporated the use of voice recordings, electroencephalogram (EEG) signals, and smart devices to create models that deduce whether a patient has PD or not. Zhao et al. hypothesized that patients with PD exhibit deficits in the production of emotional speech. To test this conjecture, five patients and seven healthy individuals were used to recognize Parkinson’s disease through voice recordings. Naive Bayes, Random Forests, and Support Vector Machines were applied for classification, achieving 65.5\% and 73.33\% accuracies on classifying PD and control. Oh et al. utilized EEG signals and a Convolutional Neural Network (CNN) to detect PD
-by assessing whether the EEG signals depicted brain abnormalities, achieving 88.25\% accuracy. Drotár et al. employed the use of a digitizing tablet to assess both in-air and on-surface kinematic variables during handwriting of a sentence in 37 PD patients on medication and 38 age- and gender-matched healthy controls. Using Support Vector Machines, an accuracy of 85.61\% was achieved. These studies require patients to visit a neurologist to access a smart device and undergo various scans like EEG and PET, making the process expensive, time-consuming, and difficult to access. In this study, we aim to make the PD diagnosis process accurate, efficient, and accessible by using images of handwriting samples to automate the PD diagnosis process. 
+Prior works have incorporated the use of voice recordings, electroencephalogram (EEG) signals, and smart devices to create models that deduce whether a patient has PD or not. \citep{zhao2014automatic} hypothesized that patients with PD exhibit deficits in the production of emotional speech. To test this conjecture, five patients and seven healthy individuals were used to recognize Parkinson’s disease through voice recordings. Naive Bayes, Random Forests, and Support Vector Machines were applied for classification, achieving 65.5\% and 73.33\% accuracies on classifying PD and control. \citep{oh2020deep} utilized EEG signals and a Convolutional Neural Network (CNN) to detect PD
+by assessing whether the EEG signals depicted brain abnormalities, achieving 88.25\% accuracy. \citep{drotar2014analysis} employed the use of a digitizing tablet to assess both in-air and on-surface kinematic variables during handwriting of a sentence in 37 PD patients on medication and 38 age and gender-matched healthy controls. Using Support Vector Machines, an accuracy of 85.61\% was achieved. However, these studies require patients to visit a neurologist to access a smart device and undergo various scans like EEG and PET, making the process expensive, time-consuming, and difficult to access. In this study, we aim to make the PD diagnosis process accurate, efficient, and accessible by using images of handwriting samples to automate the PD diagnosis process. 
 
 \section{Dataset and Preprocessing}
 \label{sec:Dataset+Preprocessing}
 
 \paragraph{Dataset}
-\label{sec:Dataset} Our dataset was formed by combining the New HandPD and Old HandPD dataset available at (https://wwwp.fc.unesp.br/~papa/pub/datasets/Handpd/). It consists of 158 individuals, 53 healthy and 105 PD patients. Each patient drew 8 images, 4 spirals and 4 meander. With these images, we constructed 2 datasets, one consisting of extracted numerical features and the other consisting of images.
+\label{sec:Dataset} Our dataset was formed by combining the New HandPD and Old HandPD dataset \citep{pereira2016new}. It consisted of 158 individuals, 53 healthy and 105 PD patients. Each patient drew 8 images, 4 spirals and 4 meander. With these images, we constructed 2 datasets, one consisting of extracted numerical features and the other consisting of images.
 
 % table 1
 \begin{table*}[hbtp]
@@ -122,7 +122,7 @@ by assessing whether the EEG signals depicted brain abnormalities, achieving 88.
 
 \paragraph{Preprocessing}
 \label{sec:Preprocessing} 
-We mimicked the feature extraction process used (cite handpd ppl) to extract 9 numerical features from the images. First, the handwritten trace (HT) and exam trace (ET) were extracted from the image. Figure (X) shows an example image and the extracted HT and ET.  Using the HT and ET, the below features were computed:
+We mimicked the feature extraction process used \citep{pereira2016new} to extract 9 numerical features from the images. First, the handwritten trace (HT) and exam trace (ET) were extracted from the image. Figure (X) shows an example image and the extracted HT and ET.  Using the HT and ET, the below features were computed:
 
 \begin{enumerate}
 \item The root mean square (RMS) of the differences between the HT and ET radii. The radius of the HT or ET can be defined as the length of the straight line that connects an arbitrary point to the center of the HT or ET and is shown in figure (X). $N$ is the number of sample points on the HT and ET.
@@ -140,7 +140,7 @@ We mimicked the feature extraction process used (cite handpd ppl) to extract 9 n
 \item F5: The Mean Relative Tremor (mrt) of a given individual’s HT. This is defined as the mean difference between the radius of a given sample and its D left-nearest neighbors. To find D, D = {1, 3, 5, 7, 10, 15, 20} were tested, with D = 10 maximizing the PD detection rate. 
 \[MRT = \frac{1}{N-D}\sum_\SUP{i=D}^N(|r_\SUP{HT}^\SUP{i-D+1} - r_\SUP{ET}^i|)\]
 
-Figures 6-8 are computed ultizing the equation for relative tremor: $r_\SUP{ET}^i - r_\SUP{HT}^\SUP{i-D+1}|$
+Figures 6-8 are computed utilizing the equation for relative tremor: $r_\SUP{ET}^i - r_\SUP{HT}^\SUP{i-D+1}|$
 \item F6: Maximum ET
 \item F7: Minimum ET
 \item F8: Standard Deviation of ET values
@@ -175,10 +175,10 @@ Additionally, we noticed there was a large class-imbalance present in our datase
 \label{Methodology}
 
 \label{sec:SVM}  
-\paragraph{(1) Support Vector Machines on Numerical Features Dataset} In model 1, we utilized a Support Vector Machine (SVM) where the PD diagnosis label was analyzed on the nine extracted numerical features. We used 10-fold Cross-Validation (CV) on the held-out validation set to maximize Accuracy by choosing an optimal kernel (Radial Base, Linear, or Polynomial), class weightage (None or Balanced), probability threshold and lambda. After training and validating the model on the image level, we tested it on the patient-level, extracting all 8 images from 11 PD and 8 healthy patients (15\% test set) and selecting an optimal aggregation scheme for patient-level predictions.  
+\paragraph{(1) Support Vector Machines on Numerical Features Dataset} In model 1, we utilized a Support Vector Machine (SVM) \citep{708428} where the PD diagnosis label was analyzed on the nine extracted numerical features. We used 10-fold Cross-Validation (CV) on the held-out validation set to maximize accuracy by choosing an optimal kernel (Radial Base, Linear, or Polynomial), class weightage (None or Balanced), probability threshold and lambda. After training and validating the model on the image level, we tested it on the patient-level, extracting all 8 images from 11 PD and 8 healthy patients (15\% test set) and selecting an optimal aggregation scheme for patient-level predictions.  
 
 \label{sec:LogReg}  
-\paragraph{(2) Regularized Logistic Regression on Numerical Features Dataset} In model 2, we employed Regularized Logistic Regression strategies, regressing the PD diagnosis label against the nine extracted numerical features. With 10-fold CV, we iterated over different lambda values, probability thresholds, and loss and solver functions to maximize accuracy for our image-level predictions. We tested the model on the patient-level After training and validating the model on the image level, we tested it on the patient-level, extracting all 8 images from 5 PD and 4 healthy patients (15\% test set) and selecting an optimal aggregation scheme for patient-level predictions.  
+\paragraph{(2) Regularized Logistic Regression on Numerical Features Dataset} In model 2, we employed Regularized Logistic Regression \citep{tibshirani1996regression} strategies, regressing the PD diagnosis label against the nine extracted numerical features. With 10-fold CV, we iterated over different lambda values, probability thresholds, and loss and solver functions to maximize accuracy for our image-level predictions. After training and validating the model on the image level, we tested it on the patient-level, extracting all 8 images from 5 PD and 4 healthy patients (15\% test set) and selecting an optimal aggregation scheme for patient-level predictions.  
 
 \section{Results}
 \label{Results}
@@ -188,4 +188,11 @@ Additionally, we noticed there was a large class-imbalance present in our datase
 
 Furthermore, we hope to increase the accessibility of our handwriting assessment through online availability using a touch-screen device, such as a phone or tablet. This enables us to take advantage of signals provided by such a device. A similar exercise may be performed using keystroke data from a computer and asking a patient to type, rather than draw. The next iteration of this work aspires to further improve model performance and work toward automatic and real-time detection of Parkinson’s disease.
 
+\clearpage
+
+% References
+\bibliography{jmlr-sample}
+\nocite{*}
+
+\clearpage
 \end{document}
