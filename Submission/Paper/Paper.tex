@@ -51,11 +51,11 @@
 \title[Short Title]{Full Title of Article\titlebreak This Title Has
 A Line Break}
 
- % Authors with different addresses and equal first authors:
+% Authors with different addresses and equal first authors:
 \author{Riya Tyagi \nametag{\thanks{Authors contributed equally}\SUP{1}},
 Tanish Tyagi \nametag{\footnotemark[1]\SUP{2}}, 
 Ming Wang \SUP{3},
-Lijun Zhang \SUP{4},
+Lijun Zhang \SUP{4}
 \centering \Email{
 \\[\bigskipamount] 
 \SUP{1}\{rtyagi\}
@@ -152,6 +152,25 @@ The features were then normalized as follows:
 f[i]' represents the normalized equivalent of feature f[i] for features 1-9.
 
 Additionally, we noticed there was a large class-imbalance present in our dataset, with 53 healthy and 105 PD patients. After performing experiments with our machine learning models, we discovered that this imbalance led to overfitting and undesirable accuracies, even after the assignation of higher weight to the healthy class. To cope with this, we truncated our original dataset by removing the 31 PD patients from the New HandPD dataset. This resulted in 127 patients, 53 healthy and 74 PD, which greatly boosted our results. The final dataset of 158 patients was randomly split between train (76.5\%), validation (8.5\%) and hold-out test (15\%) sets. Table \ref{tab:table1} shows our demographics for cohort of patients. 
+
+% table 2
+\begin{table*}[hbtp]
+\centering 
+\floatconts
+{tab:table2}
+{\caption{Model Performance} }
+    {
+        \begin{tabular}{lcccccccccc}
+        \toprule
+        \bfseries Model & \bfseries ACC & \bfseries AUC & \bfseries FP & \bfseries FN & \bfseries Sensitivity & \bfseries Specificity & \bfseries PPV & \bfseries NPV & \bfseries Threshold \\
+        \midrule
+        SVM & 0.92 & 0.93 & 12 & 0 & 1.0 & 0.81 & 0.89 & 1.0 & 0.65 \\
+        Logistic Regression & 0.93 & 0.96 & 3 & 7 & 0.92 & 0.95 & 0.90 & 0.96 & 0.62 \\
+        \bottomrule
+        \end{tabular}
+    }
+\end{table*}
+
 \section{Methodology}
 \label{Methodology}
 
@@ -164,5 +183,9 @@ Additionally, we noticed there was a large class-imbalance present in our datase
 \section{Results}
 \label{Results}
 
+\section{Conclusion and Future Works}
+\label{Conclusion+FutureWorks} In this work, we applied classification algorithms to the task of diagnosing Parkinson's Disease using handwriting samples. Our dataset was relatively small in size, a problem we hope to address in the future through development of a web portal. Along with our models, we devised a handwriting assessment based on precedents in this research area as well as data available to us. Once this portal is complete, we hope to perform clinical studies with our partners from Penn State University to evaluate the handwriting assessment and develop data considering temporal stages of Parkinson’s Disease-by analyzing handwriting images from early and later stages of Parkinson’s. 
+
+Furthermore, we hope to increase the accessibility of our handwriting assessment through online availability using a touch-screen device, such as a phone or tablet. This enables us to take advantage of signals provided by such a device. A similar exercise may be performed using keystroke data from a computer and asking a patient to type, rather than draw. The next iteration of this work aspires to further improve model performance and work toward automatic and real-time detection of Parkinson’s disease.
 
 \end{document}
