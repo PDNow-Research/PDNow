@@ -26,6 +26,9 @@
 \usepackage[load-configurations=version-1]{siunitx} % newer version 
 %\usepackage{siunitx}
 
+\usepackage[table]{xcolor}
+\newcommand\red[1]{{\color{red}#1}}
+
  % The following command is just for this sample document:
 \newcommand{\cs}[1]{\texttt{\char`\\#1}}% remove this in your real article
 
@@ -48,59 +51,48 @@
 \jmlrworkshop{Machine Learning for Health (ML4H) 2021} % W&CP title
 
  % The optional argument of \title is used in the header
-\title[Machine Learning for Diagnosis of Parkinson's Disease]{Machine Learning Real-Time and Automatic Diagnosis of Parkinson’s Disease by Extracting Signs of Micrographia from Handwriting Images}
+\title[Machine Learning for Diagnosis of Parkinson's Disease]{Machine Learning for Real-Time, Automatic, and Early Diagnosis of Parkinson’s Disease by Extracting Signs of Micrographia from Handwriting Images}
 
 % Authors with different addresses and equal first authors:
-\author{Riya Tyagi \nametag{\thanks{Authors contributed equally}\SUP{1}},
-Tanish Tyagi \nametag{\footnotemark[1]\SUP{2}}, 
-Ming Wang \SUP{3},
-Lijun Zhang \SUP{4}
-\centering \Email{
-\\[\bigskipamount] 
-\SUP{1}\{rtyagi\}
-@exeter.edu}
-\centering \Email{
-\\[\bigskipamount] 
-\SUP{2}\{ttyagi\}@mgh.harvard.edu}
-\centering \Email{
-\\[\bigskipamount] 
-\SUP{3}\{mwang\}@phs.psu.edu}
-\centering \Email{
-\\[\bigskipamount] 
-\SUP{4}\{lzhang6\}@pennstatehealth.psu.edu}
-}
+% \author{Riya Tyagi \nametag{\thanks{Authors contributed equally}},
+% Tanish Tyagi \nametag{\footnotemark[1]}, 
+% Ming Wang,
+% Lijun Zhang
+% \centering \Email{ 
+% \\[\bigskipamount]  
+% rtyagi@exeter.edu, ttyagi@mgh.harvard.edu, mwang@phs.psu.edu, lzhang6@pennstathealth.psu.edu}
+% }
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-Parkinson’s disease (PD) is debilitating, progressive, and clinically marked by motor symptoms, which affects over 10 million lives around the world. As the second most common neurodegenerative disease with no approved treatments, the existing diagnosis methods have limitations, such as the expense of visiting doctors and the challenge of automated early detection, considering that symptoms and behavioral differences in patients and healthy individuals are often not present in early stages. Micrographia is a disorder commonly observed in early stages of PD. In order to establish mechanisms for early detection of PD, we applied machine and deep learning techniques to extract signs of micrographia from drawing samples gathered from a variety of open-source datasets.  This work sets the foundations for a web portal allowing any individual worldwide with access to a pen, printer, and phone to upload an image of a handwriting assessment we designed and receive a PD diagnosis in real-time.
+Parkinson’s disease (PD) is debilitating, progressive, and clinically marked by motor symptoms. As the second most common neurodegenerative disease and with no approved treatments, it affects over 10 million lives around the world. Existing diagnoses methods have limitations, such as the expense of visiting doctors and the challenge of automated early detection, considering that behavioral differences in patients and healthy individuals are often indistinguishable in early stages. Micrographia is a disorder commonly observed in early stages of PD. In order to establish mechanisms for early detection of PD, we applied machine learning techniques to extract signs of micrographia from drawing samples gathered from two open-source datasets, achieving a predictive accuracy of 94\%. This work also sets the foundations for a publicly available and user-friendly web portal that anyone with access to a pen, printer, and phone can use for early detection of PD.
 \end{abstract}
 
 \begin{keywords}
-Parkinson’s, Micrographia, Early Detection, Diagnosis, Neurodegenerative
+Parkinson’s Disease, Machine Learning, Micrographia, Early Detection, Predictive accuracy
 \end{keywords}
 
 \section{Introduction}
 \label{sec:intro}
 
-Parkinson’s disease (PD) is a degenerative, chronic, and progressive nervous system disorder that affects movement. More than 10 million people worldwide are currently living with PD, and the number of cases is expected to more than double in the next decade. Symptoms include tremors, slowness of movement, stiffness, and changes in writing skills. PD occurs when dopamine-producing nerve cells die, a process that can take almost 10 years to reach its late and most severe stages. A lack of dopamine results in further critical symptoms, such as depression, anxiety, sleep disturbances, and dementia. 
+Parkinson’s disease (PD) is a neurodegenerative, chronic, and progressive nervous system disorder that affects movement. More than 10 million people worldwide are currently living with PD, and the number of cases is expected to more than double in the next decade. \citep{choi2017refining} Symptoms include tremors, slowness of movement, stiffness, and changes in writing skills. PD occurs when dopamine-producing nerve cells die, a process that can take almost 10 years to reach its late and most severe stages. A lack of dopamine results in further critical symptoms, such as depression, anxiety, sleep disturbances, and dementia. 
 
-Parkinson’s disease cannot be treated, although specific drugs and medications can assist with symptoms in early stages, potentially preventing the disease’s progression to more severe stages. Early detection and prognosis of PD are crucial for assisting patients to retain a good quality of life. However, diagnosing Parkinson’s disease in its early stages is a very challenging task, and there are currently no specific tests designed to diagnose PD. Diagnosis is based on a thorough examination performed by a trained medical official, including a neurological examination, medical history evaluation, blood and laboratory tests, and brain scans. Even with these procedures, PD is misdiagnosed up to 30\% of the time, especially in early stages, due to the many Parkinson’s mimics, the main ones being Essential Tremors and Drug Induced Parkinson’s. Additionally, up to 20\% of PD patients are undiagnosed. Receiving a PD diagnosis is expensive, time consuming, and non-accessible, as reported by 21\% of patients who had to visit their general provider thrice before receiving a specialist referral for their condition. 
+Parkinson's Disease cannot be treated, although specific drugs and medications can assist with symptoms in early stages, potentially preventing the disease’s progression to more severe stages. Early detection and prognosis of PD are crucial for assisting patients to retain a good quality of life. However, diagnosing Parkinson’s disease in its early stages is a very challenging task, and there are currently no specific tests designed to diagnose PD \citep{national_institute_of_neurological_disorders_and_stroke}. Diagnosis is based on a thorough examination performed by a trained medical official, including a neurological examination, medical history evaluation, blood and laboratory tests, and brain scans. Even with these procedures, PD is misdiagnosed up to 30\% of the time, especially in early stages, due to the many Parkinson’s mimics, the main ones being Essential Tremors and Drug Induced Parkinson’s. Additionally, up to 20\% of PD patients are undiagnosed \citep{schrag_ben-shlomo_quinn_2002}. Receiving a PD diagnosis is expensive, time consuming, and non-accessible, as reported by 21\% of patients who had to visit their general provider thrice before receiving a specialist referral for their condition. \citep{gavidia_2020}
 
-Tools that can make the diagnosis process accurate, accessible, automatic, real-time, early, and free of cost can have tremendous impact for Parkinson’s patients. In this study, we apply machine learning strategies to obtain and accurate and early detection of Parkinson's disease. 
+Tools that can make the diagnosis process accurate, accessible, automatic, real-time, early, and free of cost can have tremendous impact for Parkinson’s patients. In this study, we apply machine learning strategies for PD prediction based upon the existing drawing samples resources of micrographia.
 
 \section{Related Works}
 \label{related-works}
-Prior works have incorporated the use of voice recordings, electroencephalogram (EEG) signals, and smart devices to create models that deduce whether a patient has PD or not. \citep{zhao2014automatic} hypothesized that patients with PD exhibit deficits in the production of emotional speech. To test this conjecture, five patients and seven healthy individuals were used to recognize Parkinson’s disease through voice recordings. Naive Bayes, Random Forests, and Support Vector Machines were applied for classification, achieving 65.5\% and 73.33\% accuracies on classifying PD and control. \citep{oh2020deep} utilized EEG signals and a Convolutional Neural Network (CNN) to detect PD
-by assessing whether the EEG signals depicted brain abnormalities, achieving 88.25\% accuracy. \citep{drotar2014analysis} employed the use of a digitizing tablet to assess both in-air and on-surface kinematic variables during handwriting of a sentence in 37 PD patients on medication and 38 age and gender-matched healthy controls. Using Support Vector Machines, an accuracy of 85.61\% was achieved. However, these studies require patients to visit a neurologist to access a smart device and undergo various scans like EEG and PET, making the process expensive, time-consuming, and difficult to access. In this study, we aim to make the PD diagnosis process accurate, efficient, and accessible by using images of handwriting samples to automate the PD diagnosis process. 
+Prior works have incorporated the use of voice recordings, electroencephalogram (EEG) signals, and smart devices to create models that deduce whether a patient has PD or not. \citep{zhao2014automatic} hypothesized that patients with PD exhibit deficits in the production of emotional speech. To test this conjecture, five patients and seven healthy individuals were used to recognize Parkinson’s disease through voice recordings. Naive Bayes, Random Forests, and Support Vector Machines were applied for classification, achieving 65.5\% and 73.33\% accuracies on classifying PD and control. \citep{oh2020deep} utilized EEG signals and a Convolutional Neural Network (CNN) to detect PD by assessing whether the EEG signals depicted brain abnormalities, achieving 88.25\% accuracy. \citep{drotar2014analysis} employed the use of a digitizing tablet to assess both in-air and on-surface kinematic variables during handwriting of a sentence in 37 PD patients on medication and 38 age and gender-matched healthy controls. Using Support Vector Machines, an accuracy of 85.61\% was achieved. However, these studies require patients to visit a neurologist to access a smart device and undergo various scans like EEG and PET, making the process expensive, time-consuming, and difficult to access. In this study, we aim to make the PD diagnosis process more accurate, efficient, and accessible by using images of handwriting samples to automate the PD diagnosis process. 
 
 \section{Dataset and Preprocessing}
 \label{sec:Dataset+Preprocessing}
 
 \paragraph{Dataset}
-\label{sec:Dataset} Our dataset was formed by combining the New HandPD and Old HandPD dataset \citep{pereira2016new}. It consisted of 158 individuals, 53 healthy and 105 PD patients. Each patient drew 8 images, 4 spirals and 4 meander. With these images, we constructed 2 datasets, one consisting of extracted numerical features and the other consisting of images.
+\label{sec:Dataset} Our dataset was formed by combining the New HandPD and Old HandPD dataset \citep{pereira2016new}. It consisted of 158 individuals, 53 healthy and 105 PD patients. Each patient drew 8 images, 4 spirals and 4 meander. With these images, we constructed 2 datasets, one consisting of extracted numerical features and the other consisting of images. The process of assembling the image dataset and its uses are discussed further in Appendix ....
 
 % table 1
 \begin{table*}[hbtp]
@@ -114,7 +106,7 @@ by assessing whether the EEG signals depicted brain abnormalities, achieving 88.
         \bfseries & \bfseries Mean Age (SD) & \bfseries Left Handed & \bfseries Right Handed & \bfseries \% Female & \bfseries Counts \\
         \midrule
         Healthy & 44.11 (15.46) & 7 & 46 & 54.7\% & 53 \\
-        Healthy & 58.75 (7.51) & 5 & 69 & 20.3\% & 74 \\
+        PD & 58.75 (7.51) & 5 & 69 & 20.3\% & 74 \\
         \bottomrule
         \end{tabular}
     }
@@ -125,22 +117,26 @@ by assessing whether the EEG signals depicted brain abnormalities, achieving 88.
 We mimicked the feature extraction process used \citep{pereira2016new} to extract 9 numerical features from the images. First, the handwritten trace (HT) and exam trace (ET) were extracted from the image. Figure (X) shows an example image and the extracted HT and ET.  Using the HT and ET, the below features were computed:
 
 \begin{enumerate}
-\item The root mean square (RMS) of the differences between the HT and ET radii. The radius of the HT or ET can be defined as the length of the straight line that connects an arbitrary point to the center of the HT or ET and is shown in figure (X). $N$ is the number of sample points on the HT and ET.
+% \red{it is better to show some notation first or explain the notation after each formula. Otherwise, the reviewers will get confused.} 
+\item The root mean square (RMS) of the differences between the HT and ET radii. The radius of the HT or ET can be defined as the length of the straight line that connects an arbitrary point to the center of the HT or ET and is shown in figure (X). 
 \[RMS = \sqrt{\frac{1}{N} * \sum_\SUP{i=1}^N(r_\SUP{HT}^i - r_\SUP{ET}^i)^2}\]
+
+$N$ is the number of sample points on the HT and ET, and $r_\SUP{HT}^i$ + $r_\SUP{ET}^i$ denote the HT and ET radii for the $i$th point.
 
 \item The maximum difference between the HT and ET radii. 
 \[\Delta max = max(|r_\SUP{HT}^i - r_\SUP{ET}^i|)\]
 
+% \red{you may want to remove F3, F4, etc below}
 \item F3: The minimum difference between the HT and ET radii. 
 \[\Delta min = min(|r_\SUP{HT}^i - r_\SUP{ET}^i|)\]
 
 \item F4: The standard deviation of the differences between the HT and ET radii. 
 \[s = \sqrt{\frac{1}{N-1}\sum_{i=1}^N(r_\SUP{HT}^i - r_\SUP{ET}^i)^2}\]
 
-\item F5: The Mean Relative Tremor (mrt) of a given individual’s HT. This is defined as the mean difference between the radius of a given sample and its D left-nearest neighbors. To find D, D = {1, 3, 5, 7, 10, 15, 20} were tested, with D = 10 maximizing the PD detection rate. 
+\item F5: The Mean Relative Tremor (MRT) of a given individual’s HT. This is defined as the mean difference between the radius of a given sample and its D left-nearest neighbors. To find D, D = {1, 3, 5, 7, 10, 15, 20} were tested, with D = 10 maximizing the PD detection rate. 
 \[MRT = \frac{1}{N-D}\sum_\SUP{i=D}^N(|r_\SUP{HT}^\SUP{i-D+1} - r_\SUP{ET}^i|)\]
 
-Figures 6-8 are computed utilizing the equation for relative tremor: $r_\SUP{ET}^i - r_\SUP{HT}^\SUP{i-D+1}|$
+Figures 6-8 are computed utilizing the equation for relative tremor: $|r_\SUP{ET}^i - r_\SUP{HT}^\SUP{i-D+1}|$
 \item F6: Maximum ET
 \item F7: Minimum ET
 \item F8: Standard Deviation of ET values
@@ -158,7 +154,7 @@ Additionally, we noticed there was a large class-imbalance present in our datase
 \centering 
 \floatconts
 {tab:table2}
-{\caption{Model Performance} }
+{\caption{Model Performance}}
     {
         \begin{tabular}{lcccccccccc}
         \toprule
@@ -171,22 +167,57 @@ Additionally, we noticed there was a large class-imbalance present in our datase
     }
 \end{table*}
 
-\section{Methodology}
+\begin{figure*}[hbtp]
+\centering
+\floatconts
+{fig:fig1}
+{\caption{Regularized Logistic Regression (left) and Support Vector Machines (right) ROC Curves}}
+
+    \subfloat{{\includegraphics[scale = 0.55]{images/logreg_roc.png} }}%
+    \subfloat{\includegraphics[scale = 0.55]{images/svm_roc.png}} %
+
+\end{figure*}
+
+\section{Methods}
 \label{Methodology}
 
 \label{sec:SVM}  
-\paragraph{(1) Support Vector Machines on Numerical Features Dataset} In model 1, we utilized a Support Vector Machine (SVM) \citep{708428} where the PD diagnosis label was analyzed on the nine extracted numerical features. We used 10-fold Cross-Validation (CV) on the held-out validation set to maximize accuracy by choosing an optimal kernel (Radial Base, Linear, or Polynomial), class weightage (None or Balanced), probability threshold and lambda. After training and validating the model on the image level, we tested it on the patient-level, extracting all 8 images from 11 PD and 8 healthy patients (15\% test set) and selecting an optimal aggregation scheme for patient-level predictions.  
+\paragraph{(1) Support Vector Machines on Numerical Features Dataset} In model 1, we utilized a Support Vector Machine (SVM) \citep{708428} where the PD diagnosis label was analyzed on the nine extracted numerical features. We used 10-fold Cross-Validation (CV) \citep{stone1974cross} on the held-out validation set to maximize accuracy by choosing an optimal kernel (Radial Base, Linear, or Polynomial), class weight (None or Balanced), probability threshold and lambda. After training and validating the model on the image level, we tested it on the patient-level, extracting all 8 images from 11 PD and 8 healthy patients (15\% test set) and selecting an optimal aggregation scheme for patient-level predictions.  
 
 \label{sec:LogReg}  
 \paragraph{(2) Regularized Logistic Regression on Numerical Features Dataset} In model 2, we employed Regularized Logistic Regression \citep{tibshirani1996regression} strategies, regressing the PD diagnosis label against the nine extracted numerical features. With 10-fold CV, we iterated over different lambda values, probability thresholds, and loss and solver functions to maximize accuracy for our image-level predictions. After training and validating the model on the image level, we tested it on the patient-level, extracting all 8 images from 5 PD and 4 healthy patients (15\% test set) and selecting an optimal aggregation scheme for patient-level predictions.  
 
 \section{Results}
-\label{Results}
+\label{Results} To maximize the performance of both models, we utilized a probability threshold. First, we trained, validated, and tested the models on the image-level. All performance metrics in Table \ref{tab:table2} are based on image-level class assignments.
+
+However, our web portal will consider 6 - 8 different drawings per patient in the diagnosis process. To mimic this functionality, we tested each model on the patient-level with an aggregation scheme. We chose an optimal scheme from three options: applying a PD label to a patient if the model diagnosed 2/8 images as signs of PD, if the averaged probability score from all 8 images was greater than 0.5, or if the model predicted more than half the images to belong to a PD patient. The last scheme performed best, likely because the model tended to predict only a few images incorrectly per patient.
+
+Both models received the same patient-level accuracy: 0.9444. Additionally, we compared their Receiver Operating Characteristic (ROC) curves (Figure \ref{fig:fig1}) when tested on 10 different random selections of 19 patients (11 PD and 8 Control). Both models performed similarly on each test set, although Regularized Logistic Regression was more consistent because of the regularization applied.
+
+The best hyperparameters for the SVM model were:
+\begin{itemize}
+\item kernel = ‘rbf’, transforms radial data so it can be separated with a linear separation boundary
+\item class\_weight = ‘balanced’, adds weight to each class depending on the class balance
+\item C = 100, lambda value
+\end{itemize}
+
+The best hyperparameters for the Regularized Logistic Regression model were:
+\begin{itemize}
+\item penalty = ‘elasticnet’, a combination of L1 and L2 Regularization
+\item l1\_ratio = 0.75, uses 75\% L1 Regularization, 25\% L2 Regularization
+\item solver = ‘saga’, only solver which supports ‘elasticnet’ penalty, the best-performer
+\item C = 0.1, lambda value
+\item class\_weight = ‘balanced’, adds weight to each class depending on the class balance
+\item fit\_intercept = False, bias added to the decision function
+\end{itemize}
 
 \section{Conclusion and Future Works}
-\label{Conclusion+FutureWorks} In this work, we applied classification algorithms to the task of diagnosing Parkinson's Disease using handwriting samples. Our dataset was relatively small in size, a problem we hope to address in the future through development of a web portal. Along with our models, we devised a handwriting assessment based on precedents in this research area as well as data available to us. Once this portal is complete, we hope to perform clinical studies with our partners from Penn State University to evaluate the handwriting assessment and develop data considering temporal stages of Parkinson’s Disease-by analyzing handwriting images from early and later stages of Parkinson’s. 
+\label{Conclusion+FutureWorks} 
+In this work, we applied classification algorithms to the problem of early diagnosis of Parkinson's Disease using handwriting samples. Our dataset was relatively small in size, a problem we hope to address in the future by gathering data through our web portal. Along with our models, we devised a handwriting assessment based on precedents open-source datasets in this research area. View the assessment in Appendix \ref{app:assessment}. Once the web portal is complete, we hope to perform clinical studies with our partners from Penn State University. In these studies, we will evaluate the handwriting assessment and develop a handwriting dataset that considers temporal stages of Parkinson’s disease by analyzing handwriting samples from early and later stages of PD. 
 
-Furthermore, we hope to increase the accessibility of our handwriting assessment through online availability using a touch-screen device, such as a phone or tablet. This enables us to take advantage of signals provided by such a device. A similar exercise may be performed using keystroke data from a computer and asking a patient to type, rather than draw. The next iteration of this work aspires to further improve model performance and work toward automatic and real-time detection of Parkinson’s disease.
+Furthermore, we hope to increase the accessibility of our handwriting assessment through online availability using a touch-screen device, such as a phone or tablet. This enables us to take advantage of device signals. A similar exercise, with typing instead of drawing, may be performed using keystroke data from a computer. 
+
+The next iteration of this work aspires to design a Convolutional Neural Network (CNN) deep learning model. View details about image preprocessing in Appendix \ref{app:imgextraction}. We hope the CNN will further improve prediction accuracy and work toward automatic and real-time detection of Parkinson’s disease. % \red{it is better to add more references as they are not unlimited.}
 
 \clearpage
 
@@ -195,4 +226,134 @@ Furthermore, we hope to increase the accessibility of our handwriting assessment
 \nocite{*}
 
 \clearpage
+
+\appendix
+
+% Appendix A
+% Figure 2 - Feature Extraction Procedure
+\section{Image Feature Extraction Procedure}
+\label{app:imgextraction}
+
+To develop useful image features that can serve as input to a Convolutional Neural Network (CNN) model, we extracted the exam trace (ET), the outline for the patient to replicate, and the handwriting trace (HT), the outline the patient drew, from all our images. To do so, we followed the process below.
+
+Exam Trace:
+
+\begin{enumerate}
+\item Mean Blur (5 x 5 kernel)
+\item Binary Threshold
+
+Consider I to represent a pixel in an image with three color channels: red, green, and blue, written as I(r), I(g), and I(b)
+
+\[I((r, g, b)) = \begin{cases} 
+    0 & \text{if } I(r) < 90 \land I(g) < 90 \land I(b) < 90 \\
+    1 & \text{otherwise}
+\end{cases}\]
+
+\item Dilate (4 x 4 kernel)
+\end{enumerate}
+
+\begin{figure}[h] 
+\label{fig: fig2}
+\centering 
+\includegraphics[scale = 0.175]{images/exam_trace.png}
+\caption{Exam Trace Extraction Process}
+\end{figure}
+
+\vfill\null
+\columnbreak
+
+Handwriting Trace:
+
+\begin{enumerate}
+\item Median Blur (5 x 5 kernel)
+\item Binary Threshold
+
+Consider I to represent a pixel in an image with three color channels: red, green, and blue, written as I(r), I(g), and I(b)
+
+\[I((r, g, b)) = \begin{cases} 
+    0 & \text{if } I(r) < 200 \land I(g) < 200 \land I(b) < 200 \\
+    1 & \text{otherwise}
+\end{cases}\]
+
+\item Difference Image (with extracted ET)
+\item Invert and Dilate Image
+\end{enumerate}
+
+\begin{figure}[h] 
+\label{fig: fig3}
+\centering 
+\includegraphics[scale = 0.22]{images/hd_trace.png}
+\caption{Handwriting Trace Extraction Process}
+\end{figure}
+
+\clearpage
+
+Next, we combined the extracted exam trace and handwriting trace, producing an image with minimal features that has the potential to form a strong CNN model.
+
+\begin{figure} [h]
+\label{fig:fig4}
+\centering 
+\includegraphics[scale = 0.26]{images/combination.png}
+\caption{Blending HT and ET to Form the Final Image}
+\end{figure}
+
+\clearpage
+
+% Appendix B
+\section{Handwriting Assessment}
+\label{app:assessment}
+
+\begin{figure} [h]
+\label{fig:fig5}
+\centering 
+\includegraphics[scale = 0.4]{images/hand_assess.png}
+\caption{Handwriting Assessment Developed for the Web Portal}
+\end{figure}
+
+\clearpage
+
+% Appendix C
+\section{Pictures and Use Cases of PD Diagnosis Web Portal Interface} 
+
+There are two use cases of the web portal: submitting handwriting assessments and viewing assessment history. They are pictured below. The process of performing these actions is as follows:
+
+Submitting Handwriting Assessments
+
+\begin{enumerate}
+\item The user logs into their account on the portal (or creates an account if she does not have one) and navigates to the “Submit A Test” page.
+\item The user prints out the handwriting assessment .pdf available on the page.
+\item 
+The user fills out the exam, scans it, and uploads a photo to the page.
+\item After a few moments, the user receives a PD diagnosis, with their \% chance of having PD. The exam and its results are saved in the “Exam History” page.
+\end{enumerate}
+
+\begin{figure}[h]
+\label{fig:fig6}
+\centering 
+\includegraphics[scale = 0.3]{images/Submit_Test.png}
+\caption{"Submit A Test" page UI}
+\end{figure}
+
+\vfill\eject
+
+Viewing Assessment History
+
+\begin{enumerate}
+\item The user logs into their account on the portal and navigates to the “Exam History” page.
+\item The user can now view information about all their past exams, including the date, a picture of their assessment, age and gender information submitted alongside the assessment, and results.
+\item The user views their previous assessment submissions by clicking on the exam icons available next to each exam number on the page.
+\end{enumerate}
+
+
+
+\begin{figure} [h]
+\label{fig: fig7}
+\centering 
+\includegraphics[scale = 0.3]{images/Exam_Hist.png}
+\caption{"Exam History" page UI}
+\end{figure}
+
+
+\clearpage
+
 \end{document}
