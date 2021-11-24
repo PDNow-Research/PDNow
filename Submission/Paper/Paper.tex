@@ -2,7 +2,7 @@
  % proceedings
  %\documentclass[gray]{jmlr} % test grayscale version
  %\documentclass[tablecaption=bottom]{jmlr}% journal article
- \documentclass[pmlr,twocolumn,10pt]{jmlr} % W&CP article
+ \documentclass[pmlr,twocolumn,10pt,breaklinks, x11names,table]{jmlr} % W&CP article
 
  \let\SUP\textsuperscript
 
@@ -20,7 +20,8 @@
  % Remove the next line if you don't require it.
 \usepackage{url}
 \usepackage{breakurl}
-\usepackage[breaklinks]{hyperref}
+\usepackage{ragged2e}
+% \usepackage[breaklinks]{hyperref}
 \def\UrlBreaks{\do\/\do-}
 
 \usepackage{booktabs}
@@ -30,7 +31,7 @@
 \usepackage[load-configurations=version-1]{siunitx} % newer version 
 %\usepackage{siunitx}
 
-\usepackage[table]{xcolor}
+% \usepackage[table]{xcolor}
 \newcommand\red[1]{{\color{red}#1}}
 
  % The following command is just for this sample document:
@@ -48,24 +49,24 @@
 \newtheorem*{note}{Note}
 
  % change the arguments, as appropriate, in the following:
-\jmlrvolume{LEAVE UNSET}
+\jmlrvolume{ML4H Extended Abstract Arxiv Index}
 \jmlryear{2021}
-\jmlrsubmitted{LEAVE UNSET}
-\jmlrpublished{LEAVE UNSET}
+\jmlrsubmitted{2021}
+\jmlrpublished{}
 \jmlrworkshop{Machine Learning for Health (ML4H) 2021} % W&CP title
 
  % The optional argument of \title is used in the header
 \title[Machine Learning for Diagnosis of Parkinson's Disease]{Machine Learning for Real-Time, Automatic, and Early Diagnosis of Parkinson’s Disease by Extracting Signs of Micrographia from Handwriting Images}
 
 % Authors with different addresses and equal first authors:
-% \author{Riya Tyagi \nametag{\thanks{Authors contributed equally}},
-% Tanish Tyagi \nametag{\footnotemark[1]}, 
-% Ming Wang,
-% Lijun Zhang
-% \centering \Email{ 
-% \\[\bigskipamount]  
-% rtyagi@exeter.edu, ttyagi@mgh.harvard.edu, mwang@phs.psu.edu, lzhang6@pennstathealth.psu.edu}
-% }
+\author{Riya Tyagi \nametag{\thanks{Authors contributed equally}},
+Tanish Tyagi \nametag{\footnotemark[1]}, 
+Ming Wang,
+Lijun Zhang
+\centering \Email{ 
+\\[\bigskipamount]  
+rtyagi@exeter.edu, ttyagi@mgh.harvard.edu, mwang@phs.psu.edu, lzhang6@pennstathealth.psu.edu}
+}
 
 \begin{document}
 
@@ -181,11 +182,10 @@ Additionally, we noticed there was a large class imbalance in our dataset, with 
 {fig:fig1}
 {\caption{Regularized Logistic Regression (left) and Support Vector Machines (right) ROC Curves}}
 
-    \subfloat{{\includegraphics[scale = 0.55]{images/logreg_roc.png} }}%
-    \subfloat{\includegraphics[scale = 0.55]{images/svm_roc.png}} %
+    {{\includegraphics[scale = 0.55]{images/logreg_roc.png} }}%
+    {\includegraphics[scale = 0.55]{images/svm_roc.png}} %
 
 \end{figure*}
-
 \section{Methods}
 \label{Methodology}
 
@@ -221,9 +221,7 @@ Regularized Logistic Regression:
 
 \section{Conclusion and Future Works}
 \label{Conclusion+FutureWorks} 
-In this work, we applied classification algorithms to handwriting samples to diagnose Parkinson's disease in its early stages. Our dataset was relatively small in size, which we will address in the future by gathering data through our web portal. Our mockups and plans for the website are detailed in Appendix \ref{app:webportal}.  Additionally, we devised a handwriting assessment based on precedents and open-source datasets in this research area, which is available in Appendix \ref{app:assessment}. Once the web portal is complete, we hope to perform clinical studies with our partners from Penn State University. In these studies, we will evaluate the handwriting assessment and develop a handwriting dataset that considers temporal stages of Parkinson’s disease by analyzing handwriting and drawing samples from different stages of PD. 
-
-After completing the web portal, we hope to boost the accessibility of our handwriting assessment through online deployment. Ideally, a patient with a touch-screen device, such as a phone or tablet, will be able to take a quick, easy, online assessment. This also enables us to take advantage of device signals. A similar exercise, with typing instead of drawing, can be performed using keystroke data from a computer.
+In this work, we applied classification algorithms to handwriting samples to diagnose Parkinson's disease in its early stages. Our dataset was relatively small in size, which we will address in the future by gathering data through our web portal. Our mockups and plans for the website are detailed in Appendix \ref{app:webportal}.  Additionally, we devised a handwriting assessment based on precedents and open-source datasets in this research area, which is available in Appendix \ref{app:assessment}. We strive to boost the accessibility of our handwriting assessment by online deployment through a web portal. Ideally, a patient with a touch-screen device will be able to take a quick, easy, online assessment. Once the web portal is complete, we hope to perform clinical studies with our partners from Penn State University. In these studies, we will evaluate the handwriting assessment and develop a handwriting dataset that considers temporal stages of Parkinson’s disease by analyzing handwriting and drawing samples from different stages of PD. 
 
 The next iteration of our work with machine learning and deep learning models will be to design a Convolutional Neural Network (CNN) for analysis of the drawing images. We have already designed the feature extraction process, pictured in Appendix \ref{app:imgextraction}. The CNN will further improve prediction accuracy and work toward automatic and real-time detection of Parkinson’s disease. % \red{it is better to add more references as they are not unlimited.}
 
@@ -232,9 +230,9 @@ The next iteration of our work with machine learning and deep learning models wi
 % References
 
 \bibliography{jmlr-sample}
-\UrlBreaks
+%\UrlBreaks
 \nocite{*}
-\justifying
+\justify{}
 
 \clearpage
 \appendix
@@ -324,8 +322,8 @@ I represents each pixel (x, y) in an image, with three color channels: red, gree
 \caption{Exam Trace Extraction Process}
 \end{figure}
 
-\vfill\null
-\columnbreak
+\vfill\eject
+% \columnbreak
 
 Handwriting Trace:
 
